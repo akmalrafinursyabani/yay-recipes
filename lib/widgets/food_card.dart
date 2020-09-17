@@ -22,8 +22,9 @@ class FoodCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            padding: EdgeInsets.all(12),
+            margin: EdgeInsets.all(12),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
                   width: 60,
@@ -39,36 +40,35 @@ class FoodCard extends StatelessWidget {
                 SizedBox(
                   width: 12,
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: shared.blackTextFont.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                Flexible(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: shared.blackTextFont.copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.clip,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.clip,
-                    ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                      "Ready in 15 Minutes",
-                      style: shared.subGreyTextFont.copyWith(
-                        fontSize: 12,
+                      SizedBox(
+                        height: 4,
                       ),
-                    ),
-                  ],
+                      Text(
+                        "Ready in 15 Minutes",
+                        style: shared.subGreyTextFont.copyWith(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-
-          //TODO : Erase
-          //TODO : End Erase
         ],
       ),
     );

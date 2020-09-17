@@ -97,7 +97,7 @@ class SearchResultScreen extends StatelessWidget {
                   ),
                   FoodCard(
                     assets: "assets/spageti.jpg",
-                    name: "Chicken Spagetti La Forteliano asdds",
+                    name: "Chicken Spagetti La Forteliano asdds adsas",
                   ),
                   SizedBox(
                     height: 16,
