@@ -74,13 +74,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(6),
                   ),
                   onPressed: () {
-                    // TODO: Sign in
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MainScreen(),
-                      ),
-                    );
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => MainScreen(),
+                    //   ),
+                    // );
+                    context.bloc<PageBloc>().add(GoToMainPage());
                   },
                   child: Text(
                     "Sign in",
@@ -95,7 +95,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: Alignment.center,
                 child: GestureDetector(
                   onTap: () {
-                    // TODO : Register
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterScreen(),
+                      ),
+                    );
                   },
                   child: Text(
                     "I want to create new account",

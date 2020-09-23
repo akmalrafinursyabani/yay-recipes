@@ -14,8 +14,8 @@ class SearchResultScreen extends StatelessWidget {
                 print("test");
               },
               child: Container(
-                width: 32,
-                height: 32,
+                width: 36,
+                height: 36,
                 margin: EdgeInsets.only(left: 24, top: 48),
                 decoration: BoxDecoration(
                     color: Colors.white,

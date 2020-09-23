@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yay_recipes/bloc/blocs.dart';
 import 'package:yay_recipes/screens/screens.dart';
 import 'shared/shared.dart' as shared;
 
@@ -15,7 +17,15 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.green[600],
       ),
       debugShowCheckedModeBanner: false,
-      home: Wrapper(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => PageBloc()),
+          BlocProvider(
+            create: (_) => FoodRecipesBloc()..add(FetchFoodRecipes()),
+          ),
+        ],
+        child: Wrapper(),
+      ),
     );
   }
 }

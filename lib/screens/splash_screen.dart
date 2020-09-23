@@ -1,6 +1,11 @@
 part of 'screens.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +68,12 @@ class SplashScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       onPressed: () {
-                        // TODO: Register Screen
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegisterScreen(),
+                          ),
+                        );
                       },
                       child: Text(
                         "Sign me up!",
@@ -85,12 +95,13 @@ class SplashScreen extends StatelessWidget {
                         side: BorderSide(color: shared.mainColor),
                       ),
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
-                          ),
-                        );
+                        // Navigator.pushReplacement(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => LoginScreen(),
+                        //   ),
+                        // );
+                        context.bloc<PageBloc>().add(GoToLoginScreen());
                       },
                       child: Text(
                         "I already have an account",

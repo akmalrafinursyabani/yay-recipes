@@ -1,8 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:yay_recipes/bloc/blocs.dart';
 import 'package:yay_recipes/shared/shared.dart' as shared;
+import 'package:yay_recipes/models/models.dart';
 import 'package:yay_recipes/widgets/widgets.dart';
+import 'package:flutter/services.dart';
 
 part 'wrapper.dart';
 part 'splash_screen.dart';
@@ -12,3 +16,5 @@ part 'home_screen.dart';
 part 'favourite_screen.dart';
 part 'recipe_detail.dart';
 part 'search_result_screen.dart';
+part 'auth/register_screen.dart';
+part 'auth/success_register.dart';

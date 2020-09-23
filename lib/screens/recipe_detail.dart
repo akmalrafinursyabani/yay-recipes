@@ -6,7 +6,7 @@ class RecipeDetail extends StatefulWidget {
 }
 
 class _RecipeDetailState extends State<RecipeDetail> {
-  bool isInstructions = false;
+  bool isSummary = true;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
                             onTap: () {
                               // TODO : Logic Summary or Instructions
                               setState(() {
-                                isInstructions = !isInstructions;
+                                isSummary = !isSummary;
                               });
                             },
                             child: Column(
@@ -92,7 +92,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
                                 SizedBox(
                                   height: 12,
                                 ),
-                                (isInstructions)
+                                (isSummary)
                                     ? Container(
                                         height: 4,
                                         width:
@@ -113,7 +113,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
                             onTap: () {
                               // TODO : Logic Summary or Instructions
                               setState(() {
-                                isInstructions = !isInstructions;
+                                isSummary = !isSummary;
                               });
                             },
                             child: Column(
@@ -127,7 +127,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
                                 SizedBox(
                                   height: 12,
                                 ),
-                                (!isInstructions)
+                                (!isSummary)
                                     ? Container(
                                         height: 4,
                                         width:
@@ -139,8 +139,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
                                         height: 4,
                                         width:
                                             MediaQuery.of(context).size.width /
-                                                4,
-                                      ),
+                                                4),
                               ],
                             ),
                           ),
@@ -151,7 +150,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
                       ),
                       // TODO : Logic Summary or Instructions
                       Container(
-                        child: (isInstructions)
+                        child: (isSummary)
                             ? Text(
                                 "Chicken pecel in Indonesia is the name of a typical Javanese food consisting of chicken and pecel sauce. Usually what is meant is chicken that is fried dry in oil then served with tomato sauce and fresh vegetables. The usual vegetables consist of basil, cabbage, cucumber, and long beans. ",
                                 style: shared.subGreyTextFont.copyWith(

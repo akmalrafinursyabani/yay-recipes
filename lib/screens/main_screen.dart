@@ -58,15 +58,54 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          color: Colors.grey[600],
-          icon: Icon(Icons.menu),
-          onPressed: () {},
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Image.asset(
+                "assets/logo_drawer.png",
+                fit: BoxFit.contain,
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text(
+                'Settings',
+                style: shared.blackTextFont,
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.star),
+              title: Text(
+                'Rate App',
+                style: shared.blackTextFont,
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.exit_to_app,
+                color: shared.dangerColor,
+              ),
+              title: Text(
+                'Logout',
+                style: shared.blackTextFont.copyWith(
+                  color: shared.dangerColor,
+                ),
+              ),
+              onTap: () {
+                context.bloc<PageBloc>().add(GoToSplashScreen());
+              },
+            ),
+          ],
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
       ),
+      appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.grey[500])),
       body: Container(
         child: PageView(
           controller: pageController,

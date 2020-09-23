@@ -71,7 +71,32 @@ class HomeScreen extends StatelessWidget {
         Container(
           height: 172,
           width: 100,
-          child: RecipeCard(),
+          child: BlocBuilder<FoodRecipesBloc, FoodRecipesState>(
+            builder: (context, state) {
+              if (state is FoodRecipeLoaded) {
+                List<FoodRecipeModel> foodRecipes =
+                    state.foodRecipes.sublist(0, 10);
+
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: foodRecipes.length,
+                  itemBuilder: (context, index) {
+                    return RecipeCard(
+                      image: foodRecipes[index].image,
+                      title: foodRecipes[index].title,
+                      readyInMinutes: foodRecipes[index].readyInMinutes,
+                    );
+                  },
+                );
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: shared.mainColor,
+                  ),
+                );
+              }
+            },
+          ),
         ),
         SizedBox(
           height: 24,
@@ -89,9 +114,33 @@ class HomeScreen extends StatelessWidget {
           height: 24,
         ),
         Container(
+          // color: Colors.red,
           height: 172,
           width: 100,
-          child: RecipeCard(),
+          child: BlocBuilder<FoodRecipesBloc, FoodRecipesState>(
+            builder: (context, state) {
+              if (state is FoodRecipeLoaded) {
+                List<FoodRecipeModel> foodRecipes =
+                    state.foodRecipes.sublist(11, 20);
+
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: foodRecipes.length,
+                  itemBuilder: (context, index) {
+                    return RecipeCard(
+                      image: foodRecipes[index].image,
+                      title: foodRecipes[index].title,
+                      readyInMinutes: foodRecipes[index].readyInMinutes,
+                    );
+                  },
+                );
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
         ),
 
         SizedBox(
