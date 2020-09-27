@@ -1,8 +1,12 @@
 import 'dart:ui';
+import 'package:email_validator/email_validator.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:yay_recipes/bloc/blocs.dart';
+import 'package:yay_recipes/services/services.dart';
 import 'package:yay_recipes/shared/shared.dart' as shared;
 import 'package:yay_recipes/models/models.dart';
 import 'package:yay_recipes/widgets/widgets.dart';
@@ -18,3 +22,4 @@ part 'recipe_detail.dart';
 part 'search_result_screen.dart';
 part 'auth/register_screen.dart';
 part 'auth/success_register.dart';
+part 'auth/account_confirmation_screen.dart';

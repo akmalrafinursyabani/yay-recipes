@@ -23,14 +23,20 @@ class HomeScreen extends StatelessWidget {
                 height: 72,
                 child: TextField(
                   onEditingComplete: () {
+                    Flushbar(
+                      duration: Duration(seconds: 3),
+                      backgroundColor: shared.mainColor,
+                      flushbarPosition: FlushbarPosition.TOP,
+                      message: "Search feature is coming soon! :)",
+                    )..show(context);
                     print("Done");
-                    FocusScope.of(context).unfocus();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SearchResultScreen(),
-                      ),
-                    );
+                    // FocusScope.of(context).unfocus();
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => SearchResultScreen(),
+                    //   ),
+                    // );
                   },
                   textInputAction: TextInputAction.search,
                   decoration: InputDecoration(
@@ -59,7 +65,7 @@ class HomeScreen extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 24),
           child: Text(
-            "Popular this week",
+            "Check this out!",
             style: shared.blackTextFont.copyWith(
               fontSize: 18,
             ),
@@ -71,6 +77,7 @@ class HomeScreen extends StatelessWidget {
         Container(
           height: 172,
           width: 100,
+          margin: EdgeInsets.only(right: 24),
           child: BlocBuilder<FoodRecipesBloc, FoodRecipesState>(
             builder: (context, state) {
               if (state is FoodRecipeLoaded) {
@@ -81,17 +88,25 @@ class HomeScreen extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: foodRecipes.length,
                   itemBuilder: (context, index) {
-                    return RecipeCard(
-                      image: foodRecipes[index].image,
-                      title: foodRecipes[index].title,
-                      readyInMinutes: foodRecipes[index].readyInMinutes,
+                    return GestureDetector(
+                      onTap: () {
+                        print(foodRecipes[index].id.toString());
+                        context.bloc<PageBloc>().add(
+                              GoToRecipeDetail(id: foodRecipes[index].id),
+                            );
+                      },
+                      child: RecipeCard(
+                        image: foodRecipes[index].image,
+                        title: foodRecipes[index].title,
+                        readyInMinutes: foodRecipes[index].readyInMinutes,
+                      ),
                     );
                   },
                 );
               } else {
                 return Center(
                   child: CircularProgressIndicator(
-                    backgroundColor: shared.mainColor,
+                    valueColor: AlwaysStoppedAnimation<Color>(shared.mainColor),
                   ),
                 );
               }
@@ -117,6 +132,7 @@ class HomeScreen extends StatelessWidget {
           // color: Colors.red,
           height: 172,
           width: 100,
+          padding: EdgeInsets.only(right: 24),
           child: BlocBuilder<FoodRecipesBloc, FoodRecipesState>(
             builder: (context, state) {
               if (state is FoodRecipeLoaded) {
@@ -127,16 +143,26 @@ class HomeScreen extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: foodRecipes.length,
                   itemBuilder: (context, index) {
-                    return RecipeCard(
-                      image: foodRecipes[index].image,
-                      title: foodRecipes[index].title,
-                      readyInMinutes: foodRecipes[index].readyInMinutes,
+                    return GestureDetector(
+                      onTap: () {
+                        print(foodRecipes[index].id.toString());
+                        context.bloc<PageBloc>().add(
+                              GoToRecipeDetail(id: foodRecipes[index].id),
+                            );
+                      },
+                      child: RecipeCard(
+                        image: foodRecipes[index].image,
+                        title: foodRecipes[index].title,
+                        readyInMinutes: foodRecipes[index].readyInMinutes,
+                      ),
                     );
                   },
                 );
               } else {
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(shared.mainColor),
+                  ),
                 );
               }
             },
@@ -149,7 +175,7 @@ class HomeScreen extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 24),
           child: Text(
-            "You might love this",
+            "You might love this. Scroll it, it might\nsurprise you.",
             style: shared.blackTextFont.copyWith(
               fontSize: 18,
             ),
@@ -158,43 +184,42 @@ class HomeScreen extends StatelessWidget {
         SizedBox(
           height: 24,
         ),
-        Container(
-          margin: EdgeInsets.only(left: 24, right: 24),
-          width: double.infinity,
-          child: FoodCard(
-            assets: "assets/chicken-onion.jpg",
-            name: "Chicken with Bicc Onion",
-          ),
+        BlocBuilder<FoodRecipesBloc, FoodRecipesState>(
+          builder: (context, state) {
+            if (state is FoodRecipeLoaded) {
+              List<FoodRecipeModel> foodRecipes =
+                  state.foodRecipes.sublist(20, 30);
+              return Container(
+                height: MediaQuery.of(context).size.height / 2,
+                child: ListView.builder(
+                  itemCount: foodRecipes.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        print(foodRecipes[index].id.toString());
+                        context.bloc<PageBloc>().add(
+                              GoToRecipeDetail(id: foodRecipes[index].id),
+                            );
+                      },
+                      child: Container(
+                        margin:
+                            EdgeInsets.only(left: 24, right: 24, bottom: 12),
+                        width: double.infinity,
+                        child: FoodCard(
+                          assets: foodRecipes[index].image,
+                          name: foodRecipes[index].title,
+                          time: foodRecipes[index].readyInMinutes.toString(),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            } else {
+              return Container();
+            }
+          },
         ),
-
-        SizedBox(
-          height: 16,
-        ),
-
-        // TODO : Erase
-        Container(
-          margin: EdgeInsets.only(left: 24, right: 24),
-          width: double.infinity,
-          child: FoodCard(
-            assets: "assets/korean.jpg",
-            name: "Hot Spicy Rice",
-          ),
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 24, right: 24),
-          width: double.infinity,
-          child: FoodCard(
-            assets: "assets/chicken-rice.jpg",
-            name: "Pecel Ayam Uncle Muthu",
-          ),
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        // TODO : End Erase
 
         // Note : Bottom Padding
         SizedBox(

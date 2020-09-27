@@ -68,12 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RegisterScreen(),
-                          ),
-                        );
+                        context.bloc<PageBloc>().add(GoToRegisterScreen());
                       },
                       child: Text(
                         "Sign me up!",
@@ -95,12 +90,6 @@ class _SplashScreenState extends State<SplashScreen> {
                         side: BorderSide(color: shared.mainColor),
                       ),
                       onPressed: () {
-                        // Navigator.pushReplacement(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => LoginScreen(),
-                        //   ),
-                        // );
                         context.bloc<PageBloc>().add(GoToLoginScreen());
                       },
                       child: Text(

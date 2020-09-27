@@ -3,8 +3,9 @@ part of 'widgets.dart';
 class FoodCard extends StatelessWidget {
   final String assets;
   final String name;
+  final String time;
 
-  FoodCard({this.assets, this.name});
+  FoodCard({this.assets, this.name, this.time});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +33,9 @@ class FoodCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4),
                     image: DecorationImage(
-                      image: AssetImage(assets),
+                      image: (assets != null)
+                          ? NetworkImage(assets)
+                          : AssetImage("assets/logo.png"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -58,7 +61,7 @@ class FoodCard extends StatelessWidget {
                         height: 4,
                       ),
                       Text(
-                        "Ready in 15 Minutes",
+                        "Ready in $time Minutes",
                         style: shared.subGreyTextFont.copyWith(
                           fontSize: 12,
                         ),

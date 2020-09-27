@@ -6,7 +6,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool isRevealPassword = true;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  bool isHidePassword = true;
+  bool isEmailValid = false;
+  bool isPasswordValid = false;
+  bool isSigningIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,22 +36,30 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 56,
               ),
               TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                   labelText: "Email Address",
                 ),
+                onChanged: (value) {
+                  isEmailValid = EmailValidator.validate(value);
+                },
               ),
               SizedBox(
                 height: 36,
               ),
               TextField(
-                obscureText: isRevealPassword,
+                controller: passwordController,
+                obscureText: isHidePassword,
+                onChanged: (value) {
+                  isPasswordValid = value.length >= 5;
+                },
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
                     icon: Icon(Icons.visibility),
                     color: shared.disabledContent,
                     onPressed: () {
                       setState(() {
-                        isRevealPassword = !isRevealPassword;
+                        isHidePassword = !isHidePassword;
                       });
                     },
                   ),
@@ -73,15 +87,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  onPressed: () {
-                    // Navigator.pushReplacement(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => MainScreen(),
-                    //   ),
-                    // );
-                    context.bloc<PageBloc>().add(GoToMainPage());
-                  },
+                  onPressed: (isEmailValid && isPasswordValid)
+                      ? () async {
+                          setState(() {
+                            isSigningIn = true;
+                          });
+
+                          SignInSignUpResult result = await AuthServices.signIn(
+                            emailController.text,
+                            passwordController.text,
+                          );
+
+                          if (result.user == null) {
+                            Flushbar(
+                              duration: Duration(seconds: 5),
+                              flushbarPosition: FlushbarPosition.TOP,
+                              backgroundColor: Colors.red[600],
+                              message:
+                                  "Credentials does not match. Please check again",
+                            );
+                          } else {
+                            context.bloc<PageBloc>().add(GoToMainPage());
+                          }
+                        }
+                      : null,
                   child: Text(
                     "Sign in",
                     style: shared.whiteTextFont,
@@ -95,12 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: Alignment.center,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegisterScreen(),
-                      ),
-                    );
+                    context.bloc<PageBloc>().add(GoToRegisterScreen());
                   },
                   child: Text(
                     "I want to create new account",

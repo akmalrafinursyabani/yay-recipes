@@ -12,6 +12,11 @@ class GoToSplashScreen extends PageEvent {
   List<Object> get props => [];
 }
 
+class GoToRegisterScreen extends PageEvent {
+  @override
+  List<Object> get props => [];
+}
+
 class GoToLoginScreen extends PageEvent {
   @override
   List<Object> get props => [];
@@ -20,4 +25,19 @@ class GoToLoginScreen extends PageEvent {
 class GoToMainPage extends PageEvent {
   @override
   List<Object> get props => [];
+}
+
+class GoToAccountConfirmationScreen extends PageEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class GoToRecipeDetail extends PageEvent {
+  final int id;
+  final FoodRecipeDetailModel foodRecipeDetailModel;
+
+  GoToRecipeDetail({this.id, this.foodRecipeDetailModel});
+
+  @override
+  List<Object> get props => [id, foodRecipeDetailModel];
 }

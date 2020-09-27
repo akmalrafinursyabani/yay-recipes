@@ -15,4 +15,19 @@ class FoodRecipesServices {
 
     return results.map((e) => FoodRecipeModel.fromJson(e)).toList();
   }
+
+  static Future<FoodRecipeDetailModel> getFoodRecipeDetails(int idRecipes,
+      {http.Client client}) async {
+    String url =
+        "https://api.spoonacular.com/recipes/$idRecipes/information?includeNutrition=false&apiKey=${shared.apiKey}";
+
+    client ??= http.Client();
+
+    var response = await http.get(url);
+    var data = jsonDecode(response.body);
+
+    // FoodRecipeDetailModel detailModel = FoodRecipeDetailModel.fromJson(data);
+
+    return FoodRecipeDetailModel.fromJson(data);
+  }
 }

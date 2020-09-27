@@ -3,6 +3,10 @@ part of 'screens.dart';
 class RecipeDetail extends StatefulWidget {
   @override
   _RecipeDetailState createState() => _RecipeDetailState();
+
+  final int idRecipe;
+
+  RecipeDetail({this.idRecipe});
 }
 
 class _RecipeDetailState extends State<RecipeDetail> {
@@ -11,197 +15,254 @@ class _RecipeDetailState extends State<RecipeDetail> {
   @override
   Widget build(BuildContext context) {
     // TODO : Recipe Details
-    return Scaffold(
-      body: Stack(
-        children: [
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              height: MediaQuery.of(context).size.height / 2 + 2 * 24,
-              decoration: BoxDecoration(
-                color: shared.loadingBackground,
-                image: DecorationImage(
-                  image: AssetImage("assets/pecel.jpg"),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-          SingleChildScrollView(
-            child: Padding(
-              padding:
-                  EdgeInsets.only(top: MediaQuery.of(context).size.height / 2),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  padding: EdgeInsets.all(24),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(24),
-                      topRight: Radius.circular(24),
+    return WillPopScope(
+      onWillPop: () async {
+        context.bloc<PageBloc>().add(GoToMainPage());
+
+        return;
+      },
+      child: Scaffold(
+        body: BlocBuilder<PageBloc, PageState>(
+          builder: (context, state) {
+            if (state is OnRecipeDetail) {
+              FoodRecipeDetailModel recipeDetail = state.foodRecipeDetailModel;
+
+              return Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 2 + 2 * 24,
+                      decoration: BoxDecoration(
+                        color: shared.loadingBackground,
+                        image: DecorationImage(
+                          image: NetworkImage(recipeDetail.image),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width / 4,
-                        height: 4,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.grey[300],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      Text(
-                        "Pecel Ayam Wijen",
-                        style: shared.blackTextFont.copyWith(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: 24,
-                      ),
-                      buildIconDetail(),
-                      SizedBox(
-                        height: 28,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              // TODO : Logic Summary or Instructions
-                              setState(() {
-                                isSummary = !isSummary;
-                              });
-                            },
-                            child: Column(
-                              children: [
-                                Text(
-                                  "Summary",
-                                  style: shared.blackTextFont.copyWith(
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                (isSummary)
-                                    ? Container(
-                                        height: 4,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                4,
-                                        color: Colors.green[600],
-                                      )
-                                    : Container(
-                                        height: 4,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                4,
-                                      ),
-                              ],
+                  SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height / 2),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          padding: EdgeInsets.all(24),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(24),
+                              topRight: Radius.circular(24),
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              // TODO : Logic Summary or Instructions
-                              setState(() {
-                                isSummary = !isSummary;
-                              });
-                            },
-                            child: Column(
-                              children: [
-                                Text(
-                                  "Instructions",
-                                  style: shared.blackTextFont.copyWith(
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                (!isSummary)
-                                    ? Container(
-                                        height: 4,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                4,
-                                        color: Colors.green[600],
-                                      )
-                                    : Container(
-                                        height: 4,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                4),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      // TODO : Logic Summary or Instructions
-                      Container(
-                        child: (isSummary)
-                            ? Text(
-                                "Chicken pecel in Indonesia is the name of a typical Javanese food consisting of chicken and pecel sauce. Usually what is meant is chicken that is fried dry in oil then served with tomato sauce and fresh vegetables. The usual vegetables consist of basil, cabbage, cucumber, and long beans. ",
-                                style: shared.subGreyTextFont.copyWith(
-                                  height: 1.5,
-                                ),
-                              )
-                            : Container(
-                                child: Center(
-                                  child: Text("Instruction Page"),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width / 4,
+                                height: 4,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Colors.grey[300],
                                 ),
                               ),
+                              SizedBox(
+                                height: 12,
+                              ),
+                              Text(
+                                recipeDetail.title,
+                                style: shared.blackTextFont.copyWith(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(
+                                height: 24,
+                              ),
+                              buildIconDetail(
+                                recipeDetail.readyInMinutes,
+                                recipeDetail.servings,
+                                recipeDetail.score.toInt(),
+                              ),
+                              SizedBox(
+                                height: 28,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      // TODO : Logic Summary or Instructions
+                                      setState(() {
+                                        isSummary = !isSummary;
+                                      });
+                                    },
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "Summary",
+                                          style: shared.blackTextFont.copyWith(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 12,
+                                        ),
+                                        (isSummary)
+                                            ? Container(
+                                                height: 4,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    4,
+                                                color: Colors.green[600],
+                                              )
+                                            : Container(
+                                                height: 4,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    4,
+                                              ),
+                                      ],
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      // TODO : Logic Summary or Instructions
+                                      setState(() {
+                                        isSummary = !isSummary;
+                                      });
+                                    },
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "Instructions",
+                                          style: shared.blackTextFont.copyWith(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 12,
+                                        ),
+                                        (!isSummary)
+                                            ? Container(
+                                                height: 4,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    4,
+                                                color: Colors.green[600],
+                                              )
+                                            : Container(
+                                                height: 4,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    4),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              // TODO : Logic Summary or Instructions
+                              Container(
+                                child: (isSummary)
+                                    ? Text(
+                                        recipeDetail.summary
+                                            .replaceAll("<b>", "")
+                                            .replaceAll("</b>", "")
+                                            .replaceAll("<p>", "")
+                                            .replaceAll("</p>", "")
+                                            .replaceAll("<a href=", "")
+                                            .replaceAll("</a>", "")
+                                            .replaceAll("<ol>", "")
+                                            .replaceAll("<li", "")
+                                            .replaceAll("</ol>", "")
+                                            .replaceAll("</li", ""),
+                                        style: shared.subGreyTextFont.copyWith(
+                                          height: 1.5,
+                                        ),
+                                      )
+                                    : Container(
+                                        child: Center(
+                                          child: Text(
+                                            recipeDetail.instructions
+                                                .replaceAll("<b>", "")
+                                                .replaceAll("</b>", "")
+                                                .replaceAll("<p>", "")
+                                                .replaceAll("</p>", "")
+                                                .replaceAll("<a href=", "")
+                                                .replaceAll("</a>", "")
+                                                .replaceAll("<ol>", "")
+                                                .replaceAll("<li>", "\n")
+                                                .replaceAll("</ol>", "")
+                                                .replaceAll("</li>", ""),
+                                            style:
+                                                shared.subGreyTextFont.copyWith(
+                                              height: 1.5,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                width: 32,
-                height: 32,
-                margin: EdgeInsets.only(left: 24, top: 48),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 4,
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                      onTap: () {
+                        context.bloc<PageBloc>().add(GoToMainPage());
+                      },
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        margin: EdgeInsets.only(left: 24, top: 48),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 4,
+                              ),
+                            ]),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.grey[600],
+                          size: 16,
+                        ),
                       ),
-                    ]),
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Colors.grey[600],
-                  size: 16,
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return Center(
+                child: SpinKitRotatingCircle(
+                  size: 48,
+                  color: shared.mainColor,
                 ),
-              ),
-            ),
-          ),
-        ],
+              );
+            }
+          },
+        ),
       ),
     );
   }
 
-  Row buildIconDetail() {
+  Row buildIconDetail(int minutes, int servings, int score) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -225,7 +286,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
               height: 4,
             ),
             Text(
-              "20 Minutes",
+              "$minutes Minutes",
               style: shared.subBlackTextFont.copyWith(fontSize: 14),
               textAlign: TextAlign.center,
             ),
@@ -250,7 +311,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
               height: 4,
             ),
             Text(
-              "4 Serving(s)",
+              "$servings Serving(s)",
               style: shared.subBlackTextFont.copyWith(fontSize: 14),
               textAlign: TextAlign.center,
             ),
@@ -275,7 +336,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
               height: 4,
             ),
             Text(
-              "84/100",
+              "$score/100",
               style: shared.subBlackTextFont.copyWith(fontSize: 14),
               textAlign: TextAlign.center,
             ),

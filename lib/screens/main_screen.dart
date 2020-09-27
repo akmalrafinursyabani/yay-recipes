@@ -96,6 +96,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               onTap: () {
+                AuthServices.signOut();
                 context.bloc<PageBloc>().add(GoToSplashScreen());
               },
             ),

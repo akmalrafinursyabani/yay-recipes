@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "837891496907",
+    "firebase_url": "https://yay-recipes.firebaseio.com",
+    "project_id": "yay-recipes",
+    "storage_bucket": "yay-recipes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:837891496907:android:4923305c43ed66914c344e",
+        "android_client_info": {
+          "package_name": "com.example.yay_recipes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "837891496907-06vaaafsagtu8d436dcr9o34ug42kfjf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgvBR8GsMskc12cSvLMKn9c3UX47TJj8U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "837891496907-06vaaafsagtu8d436dcr9o34ug42kfjf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

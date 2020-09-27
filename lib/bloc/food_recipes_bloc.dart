@@ -20,7 +20,7 @@ class FoodRecipesBloc extends Bloc<FoodRecipesEvent, FoodRecipesState> {
       yield FoodRecipesInitial();
     } else if (event is FetchFoodRecipes) {
       List<FoodRecipeModel> foodRecipes =
-          await FoodRecipesServices.getFoodRecipes(25);
+          await FoodRecipesServices.getFoodRecipes(30);
 
       yield FoodRecipeLoaded(foodRecipes: foodRecipes);
     }
